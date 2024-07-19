@@ -271,3 +271,55 @@
     height: 100%;
     background-color: transparent;
 }
+
+
+@media screen and (max-width: 768px) {
+    .notes-page-container {
+        width: 100%;
+        left: 0%;
+        top: 0px;
+        padding: 40px 0%;
+    }
+
+    .note-item {
+        width: 46%;
+        padding: 10px;
+    }
+
+    .note-title {
+        font-size: 14px;
+    }
+
+    .note-content {
+        font-size: 12px;
+    }
+
+    .notes-label {
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .notes-colors {
+        width: 100%;
+        width: 140px;
+        top: 25px;
+        left: 0px;
+        padding: 5px;
+        background-color: #2E236C;
+    }
+
+    .notes-color {
+        width: 15px;
+        height: 15px;
+    }
+
+    .notes-color-icon {
+        font-size: 17px;
+    }
+
+    .notes-input-container {
+        width: 90%;
+    }
+    
+    
+}

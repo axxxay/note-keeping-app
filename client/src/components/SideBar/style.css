@@ -7,7 +7,7 @@
     background-color: #2E236C;
     color: #fff;
     padding-top: calc(10vh + 20px);
-    z-index: 1;
+    z-index: 100;
     overflow-y: auto;
 }
 
@@ -56,4 +56,36 @@
     outline: none;
     text-decoration: none;
     border: none;
+}
+
+.sidebar-mobile-container {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar-container {
+        display: none;
+    }
+
+    .sidebar-mobile-container {
+        display: block;
+        width: 80%;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        display: block;
+        z-index: 50;
+    }
+    
 }

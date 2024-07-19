@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import './style.css';
 
-const SideBar = ({setSearchQuery}) => {
+const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
 
     const location = useLocation();
     const path = location.pathname;
@@ -48,10 +48,15 @@ const SideBar = ({setSearchQuery}) => {
     const onClickTab = (tab) => {
         setSearchQuery('');
         setActiveTab(tab);
+        if (showSideBar) {
+            setShowSideBar(false);
+        }
     }
 
     return (
-        <div className="sidebar-container">
+        <>
+        <div className={` ${showSideBar ? "sidebar-overlay" : ""}`} onClick={() => setShowSideBar(false)}></div>
+        <div className={`sidebar-container ${showSideBar ? "sidebar-mobile-container" : ""}`}>
             <Link to="/notes" className={`sidebar-item ${activeTab === 'notes' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('notes')} >
                 <MdOutlineLightbulb className="sidebar-icon" />
                 <p className="sidebar-item-text">Notes</p>
@@ -71,6 +76,7 @@ const SideBar = ({setSearchQuery}) => {
                 </Link>
             ))}
         </div>
+        </>
     );
 }
 

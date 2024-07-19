@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import { RiMenuUnfold3Line } from "react-icons/ri";
 import {Toaster} from 'react-hot-toast';
 import AuthPage from './components/AuthPage';
 import NavBar from './components/NavBar';
@@ -10,15 +11,20 @@ import ArchivePage from './components/ArchivePage';
 import TrashPage from './components/TrashPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import SearchPage from './components/SearchPage';
-import './App.css';
 import LabelPage from './components/LabelPage';
+import './App.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSideBar, setShowSideBar] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  }
+
+  const handleSideBar = () => {
+    setShowSideBar(!showSideBar);
   }
 
   const location = useLocation();
@@ -37,7 +43,12 @@ function App() {
       <NavBar searchQuery={searchQuery} handleSearch={handleSearch} />
       <Toaster />
       <div className="App">
-        {Cookies.get('jwt_token') && <SideBar setSearchQuery={setSearchQuery} />}
+        {Cookies.get('jwt_token') && <SideBar setSearchQuery={setSearchQuery} showSideBar={showSideBar} setShowSideBar={setShowSideBar} />}
+        {Cookies.get('jwt_token') &&
+          <button className="sidebar-toggle-btn" onClick={() => setShowSideBar(true)}>
+            <RiMenuUnfold3Line className="sidebar-toggle-icon" />
+          </button>
+        }
         <Routes>
           <Route exact path="/" element={<AuthPage />} />
           <Route exact path="/notes" element={<ProtectedRoute  element={<NotesPage />} />} />

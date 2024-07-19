@@ -13,3 +13,28 @@
   width: 100%;
   position: relative;
 }
+
+.sidebar-toggle-btn {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar-toggle-btn {
+    display: block;
+    position: absolute;
+    top: 10vh;
+    left: 20px;
+    margin-top: 8px;
+    cursor: pointer;
+    z-index: 2;
+    border: none;
+    padding: 0px;
+    background-color: transparent;
+  }
+
+  .sidebar-toggle-icon {
+    color: #C8ACD6;
+    font-size: 25px;
+  }
+  
+}

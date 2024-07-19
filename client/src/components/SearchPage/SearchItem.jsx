@@ -17,6 +17,11 @@ function SearchItem({note, trashNote, archiveNote, unarchiveNote, openEditNotePo
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
+            <div className="notes-item-labels-container">
+                {note.labels.map((label, index) => (
+                    <div key={index} className="notes-label">{label}</div>
+                ))}
+            </div>
         </div>
         {showActions &&
         <div className="note-actions">
@@ -37,9 +42,6 @@ function SearchItem({note, trashNote, archiveNote, unarchiveNote, openEditNotePo
                     </div>
                 }
             </div>
-            <button className="note-action-btn" title='Labels'>
-                <MdLabelOutline className='note-action-icon' />
-            </button>
             <button className="note-action-btn" onClick={note.archived ? () => unarchiveNote(note.id) : () => archiveNote(note.id)} title='Archive'>
                 {note.archived ?
                     <MdOutlineUnarchive className='note-action-icon' />
