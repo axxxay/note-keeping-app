@@ -42,7 +42,7 @@ function LoginForm({setToggleLogin}) {
       if (response.ok) {
         Cookies.set('jwt_token', data.jwtToken, { expires: 7 });
         setError('');
-        navigate('/notes');
+        navigate('/notes', { replace: true });
         window.location.reload();
       } else {
         setError(data.error);
@@ -54,7 +54,7 @@ function LoginForm({setToggleLogin}) {
   }
 
   if(Cookies.get('jwt_token')) {
-    return <Navigate to='/notes' />
+    return <Navigate to='/notes' replace />
   }
 
   return (

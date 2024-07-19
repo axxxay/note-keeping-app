@@ -12,7 +12,7 @@ const NavBar = () => {
 
     const handleLogout = () => {
         Cookies.remove('jwt_token');
-        navigate('/');
+        navigate('/', { replace: true });
         window.location.reload();
     }
 
