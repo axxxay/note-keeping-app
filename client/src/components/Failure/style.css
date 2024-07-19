@@ -1,0 +1,31 @@
+.failure-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    width: 100%;
+}
+
+.failure-icon {
+    color: #2E236C;
+    font-size: 100px;
+}
+
+.failure-text {
+    color: #2E236C;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.retry-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2E236C;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}

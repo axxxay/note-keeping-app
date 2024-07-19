@@ -5,12 +5,22 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineArchive, MdLabelOutline, MdCancel, MdEditNote} from "react-icons/md";
 import toast from "react-hot-toast";
 import SearchItem from "./SearchItem";
-// import './style.css';
+import Loader from "../Loader";
+import NoNotes from "../NoNotes";
+import Failure from "../Failure";
+
+const apiStatusConstants = {
+    initial: 'INITIAL',
+    inProgress: 'IN_PROGRESS',
+    success: 'SUCCESS',
+    failure: 'FAILURE'
+}
 
 const SearchPage = ({search}) => {
     
     const [notesList, setNotesList] = useState([]);
     const [showEditNotePopup, setShowEditNotePopup] = useState(false);
+    const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
     const [note, setNote] = useState({
         title: '',
         content: '',
@@ -54,17 +64,21 @@ const SearchPage = ({search}) => {
             }
         }
         try {
+            setApiStatus(apiStatusConstants.inProgress);
             const response = await fetch(url, options);
             const data = await response.json();
             if (response.ok) {
                 console.log(data)
                 setNotesList(data);
+                setApiStatus(apiStatusConstants.success);
             } else {
                 console.log(data.error);
                 toast.error(data.error);
+                setApiStatus(apiStatusConstants.failure);
             }
         } catch (error) {
             console.log(error);
+            setApiStatus(apiStatusConstants.failure);
         }
     }
 
@@ -212,14 +226,34 @@ const SearchPage = ({search}) => {
         </div>
     )
 
+    const renderNotesList = () => (
+        notesList.length !== 0 ? 
+        <div className="notes-list-container">
+            {notesList.map((note, index) => (
+                    <SearchItem key={index} note={note} trashNote={trashNote} archiveNote={archiveNote} unarchiveNote={unarchiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
+            ))}
+        </div>
+        :
+        <NoNotes />
+    )
+
+    const renderSwitch = () => {
+        switch (apiStatus) {
+            case apiStatusConstants.inProgress:
+                return <Loader />
+            case apiStatusConstants.success:
+                return renderNotesList();
+            case apiStatusConstants.failure:
+                return <Failure fetchNotes={fetchNotes} />
+            default:
+                return null;
+        }
+    }
+
     return (
         <div className="notes-page-container">
             <h1 className="notes-page-title">Search</h1>
-            <div className="notes-list-container">
-                {notesList.map((note, index) => (
-                    <SearchItem key={index} note={note} trashNote={trashNote} archiveNote={archiveNote} unarchiveNote={unarchiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
-                ))}
-            </div>
+            {renderSwitch()}
             {showEditNotePopup && renderEditNotePopup(note)}
         </div>
     );

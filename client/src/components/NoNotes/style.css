@@ -1,0 +1,19 @@
+.no-notes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+    width: 100%;
+}
+
+.no-notes-icon {
+    color: #2E236C;
+    font-size: 100px;
+}
+
+.no-notes-text {
+    color: #2E236C;
+    font-size: 24px;
+    margin-top: 20px;
+}
