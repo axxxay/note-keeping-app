@@ -12,6 +12,15 @@ const createNote = async (req, res) => {
     }
 }
 
+const searchNotes = async (req, res) => {
+    try {
+        const notes = await noteService.searchNotes(req.user.id, req.query.search);
+        res.status(200).json(notes);
+    } catch (error) {
+        res.status(error.statusCode || 500).json({error: error.message});
+    }
+}
+
 const getNotes = async (req, res) => {
     try {
         const notes = await noteService.getNotes(req.user.id);
@@ -104,7 +113,8 @@ const deleteNote = async (req, res) => {
 }
 
 module.exports = { 
-    createNote, 
+    createNote,
+    searchNotes, 
     getNotes, 
     getArchivedNotes, 
     getTrashedNotes, 

@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import {Toaster} from 'react-hot-toast';
 import AuthPage from './components/AuthPage';
@@ -8,24 +9,44 @@ import NotesPage from './components/NotesPage';
 import ArchivePage from './components/ArchivePage';
 import TrashPage from './components/TrashPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import SearchPage from './components/SearchPage';
 import './App.css';
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  }
+
+  const location = useLocation();
+  const path = location.pathname;
+
+  useEffect(() => {
+    if (searchQuery.trim().length !== 0 && path !== '/search') {
+      navigate("/search");
+    } else if (searchQuery.trim().length === 0 && path === '/search') {
+      navigate("/");
+    }
+  }, [searchQuery, navigate]);
+
   return (
-    <BrowserRouter>
-      <NavBar />
+    <>
+      <NavBar searchQuery={searchQuery} handleSearch={handleSearch} />
       <Toaster />
       <div className="App">
-        {Cookies.get('jwt_token') && <SideBar />}
+        {Cookies.get('jwt_token') && <SideBar setSearchQuery={setSearchQuery} />}
         <Routes>
           <Route exact path="/" element={<AuthPage />} />
           <Route exact path="/notes" element={<ProtectedRoute  element={<NotesPage />} />} />
           <Route exact path="/archive" element={<ProtectedRoute element={<ArchivePage />} />} />
           <Route exact path="/bin" element={<ProtectedRoute element={<TrashPage />} />} />
+          <Route exact path="/search" element={<ProtectedRoute element={<SearchPage search={searchQuery} />} />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 

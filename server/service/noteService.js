@@ -1,6 +1,7 @@
 const {v4: uuidv4} = require('uuid');
 const Note = require('../model/Note');
 const {validateNote} = require('../utils/validation');
+const { Op } = require('sequelize');
 
 const createNote = async (note) => {
     try {
@@ -14,6 +15,33 @@ const createNote = async (note) => {
         throw error;
     }
 };
+
+const searchNotes = async (userId, query) => {
+    try {
+        const notes = await Note.findAll({
+            where: {
+                user_id: userId,
+                trashed: 0,
+                [Op.or]: {
+                    title: {
+                        [Op.like]: `%${query}%`
+                    },
+                    content: {
+                        [Op.like]: `%${query}%`
+                    }
+                }
+            },
+            order: [['created_at', 'DESC']]
+        });
+        notes.forEach(note => {
+            note.labels = note.labels.split(',').map(label => label.trim());
+        });
+        return notes;
+    } catch (error) {
+        console.error('Error searching notes:', error);
+        throw error;
+    }
+}
 
 const getNotes = async (userId) => {
     try {
@@ -188,6 +216,7 @@ const deleteNote = async (noteId) => {
 
 module.exports = { 
     createNote, 
+    searchNotes,
     getNotes, 
     getArchivedNotes, 
     getTrashedNotes, 

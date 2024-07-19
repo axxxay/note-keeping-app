@@ -3,6 +3,7 @@ const noteController = require('../controller/noteController');
 const router = require('express').Router();
 
 router.post('/', noteController.createNote);
+router.get('/search', noteController.searchNotes);
 router.get('/', noteController.getNotes);
 router.get('/archived', noteController.getArchivedNotes);
 router.get('/trashed', noteController.getTrashedNotes);
