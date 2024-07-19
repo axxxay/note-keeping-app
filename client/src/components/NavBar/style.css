@@ -125,6 +125,10 @@
     outline: none;
 }
 
+.search-bar::placeholder {
+    color: #433D8B;
+}
+
 @media screen and (max-width: 768px) {
 
     .navbar-logo {
@@ -169,6 +173,24 @@
 
     .menu-logout-button {
         display: block;
+    }
+
+    .search-bar-con {
+        width: 80%;
+        max-width: 600px;
+        position: absolute;
+        top: 6px;
+        left: 20px;
+        display: none;
+    }
+
+    .mobile-search-bar-con {
+        display: flex;
+    }
+
+    .search-bar-btn {
+        right: 50px;
+        position: absolute;
     }
     
 }

@@ -8,6 +8,7 @@ import './style.css'
 
 const NavBar = ({searchQuery, handleSearch}) => {
     const [showMenu, setShowMenu] = useState(false);
+    const [showSearchBar, setShowSearchBar] = useState(false);
 
     const navigate = useNavigate();
 
@@ -22,10 +23,16 @@ const NavBar = ({searchQuery, handleSearch}) => {
             <nav className="navbar-container">
                 <Link to="/" className="navbar-logo">Keep Notes</Link>
                 { Cookies.get('jwt_token') && 
-                    <div className="search-bar-con">
+                    <div className={`search-bar-con ${showSearchBar ? "mobile-search-bar-con" : ""}`}>
                         <MdOutlineSearch className="search-icon" />
-                        <input type="search" placeholder="Search" className="search-bar" value={searchQuery} onChange={handleSearch} />
+                        <input type="search" placeholder="Search" className="search-bar" value={searchQuery} onChange={handleSearch} onBlur={() => setShowSearchBar(false)} />
                     </div>
+                }
+                { Cookies.get('jwt_token') && 
+                    !showSearchBar &&
+                    (<button className="menu-button search-bar-btn" onClick={() => setShowSearchBar(!showSearchBar)}>
+                        <MdOutlineSearch className="search-icon" />
+                    </button>)
                 }
                 <button className="menu-button" onClick={() => setShowMenu(!showMenu)}>
                     {showMenu ? <IoClose className="menu-icon" /> :
