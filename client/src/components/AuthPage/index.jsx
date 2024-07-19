@@ -16,7 +16,7 @@ function AuthPage() {
                 }
             </div>
             <div className='authpage-img-con'>
-                <img src='/auth-bg.jpg' alt='keep notes' draggable={false} className='authpage-img' />
+                <img src='/home-bg.png' alt='keep notes' draggable={false} className='authpage-img' />
             </div>
         </div>
     )

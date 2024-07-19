@@ -25,7 +25,7 @@ const NavBar = ({searchQuery, handleSearch}) => {
                 { Cookies.get('jwt_token') && 
                     <div className={`search-bar-con ${showSearchBar ? "mobile-search-bar-con" : ""}`}>
                         <MdOutlineSearch className="search-icon" />
-                        <input type="search" placeholder="Search" className="search-bar" value={searchQuery} onChange={handleSearch} onBlur={() => setShowSearchBar(false)} />
+                        <input type="search" placeholder="Search" className="search-bar" value={searchQuery} onChange={handleSearch} autoFocus onBlur={() => setShowSearchBar(false)} />
                     </div>
                 }
                 { Cookies.get('jwt_token') && 
