@@ -1,0 +1,132 @@
+.authpage-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 90vh;
+    width: 100%;
+    background-color: #17153B;
+}
+
+.authpage-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 0 5%;
+}
+
+.authpage-heading {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #C8ACD6;
+}
+
+.authpage-img-con {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+}
+
+.authpage-img {
+    width: 90%;
+    max-width: 700px;
+    user-select: none;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 350px;
+    background-color: #e1c7ee;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #fff;
+}
+
+.auth-heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #17153B;
+    align-self: center;
+}
+
+.auth-label {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #17153B;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #17153B;
+    background-color: transparent;
+    outline: none;
+}
+
+.auth-error {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fb4c69;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #17153B;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+
+.auth-para {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #17153B;
+}
+
+.auth-link {
+    font-size: 12px;
+    font-weight: 700;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .authpage-container {
+        flex-direction: column;
+    }
+
+    .authpage-content {
+        width: 100%;
+        padding: 0 4%;
+        min-height: 80vh;
+    }
+
+    .authpage-heading {
+        font-size: 24px;
+    }
+
+    .authpage-img-con {
+        display: none;
+    }
+    
+}

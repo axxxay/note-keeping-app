@@ -1,0 +1,149 @@
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6%;
+    background-color: #dec4eb;
+    height: 10vh;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+}
+
+.navbar-logo {
+    font-size: 25px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #17153B;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding-left: 0px;
+}
+
+.nav-item {
+    margin: 0 15px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #17153B;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.menu-button {
+    display: none;
+}
+
+.menu-container {
+    display: none;
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    width: 100%;
+    background-color: #2E236C;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-top: 1px solid #dee2e6;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding-left: 0px;
+    margin: 10px 0;
+}
+
+.menu-item {
+    margin: 10px 0;
+}
+
+.logout-button {
+    background-color: #433D8B;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.menu-logout-button {
+    display: none;
+    background-color: #dec4eb;
+    color: #433D8B;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 768px) {
+
+    .navbar-logo {
+        font-size: 18px;
+    }
+
+    .nav-list {
+        display: none;
+    }
+
+    .nav-item {
+        margin: 0;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        color: #dec4eb;
+    }
+
+    .menu-button {
+        display: block;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+        background-color: transparent;
+    }
+
+    .menu-icon {
+        font-size: 24px;
+        color: #17153B;
+    }
+
+    .menu-container {
+        display: block;
+    }
+
+    .logout-button {
+        display: none;
+    }
+
+    .menu-logout-button {
+        display: block;
+    }
+    
+}

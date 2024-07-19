@@ -1,0 +1,217 @@
+.notes-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+    min-height: 90vh;
+    background-color: #17153B;
+    width: 80%;
+    padding: 40px 4%;
+}
+
+.notes-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 20px;
+    border: 1px solid #C8ACD6;
+    border-radius: 15px;
+}
+
+.notes-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.notes-textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 200px;
+    min-height: 50px;
+    padding: 20px;
+    border: none;
+    border-top: 1px solid #2E236C;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.notes-options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.notes-save-button  {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.notes-save-icon {
+    color: #C8ACD6;
+    font-size: 24px;
+}
+
+.notes-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 90%;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.note-item {
+    width: 21%;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #C8ACD6;
+    cursor: pointer;
+    min-height: 150px;
+    position: relative;
+}
+
+.note-title {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.note-content {
+    color: white;
+    font-size: 14px;
+}
+
+.notes-options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 70%;
+}
+
+.notes-option-con {
+    position: relative;
+}
+
+.notes-option-btn {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-right: 0px;
+    position: relative;
+}
+
+.notes-option-icon {
+    color: #C8ACD6;
+    font-size: 20px;
+    margin-right: 25px;
+}
+
+.notes-colors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    width: 200px;
+    position: absolute;
+    top: 25px;
+    left: 0px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #2E236C;
+}
+
+.notes-color {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 0px;
+}
+
+.notes-color-icon {
+    color: white;
+    font-size: 28px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.note-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    align-self: flex-end;
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+    padding: 0px 10px;
+}
+
+.note-action-btn {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    /* margin-right: 10px; */
+}
+
+.note-action-icon {
+    color: #C8ACD6;
+    font-size: 20px;
+}
+
+.notes-update-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 10vh;
+    left: 0px;
+    width: 100%;
+    height: 90vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.notes-update-popup-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}

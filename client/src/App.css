@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+.App {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
