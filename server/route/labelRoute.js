@@ -7,6 +7,6 @@ router.get('/', labelController.getLabels);
 router.get('/:id', labelController.getLabel);
 router.put('/:id', labelController.updateLabel);
 router.delete('/:id', labelController.deleteLabel);
-router.get('/:id/notes', labelController.getLabeledNotes);
+router.get('/:label/notes', labelController.getLabeledNotes);
 
 module.exports = router;

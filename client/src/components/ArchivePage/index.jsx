@@ -4,11 +4,12 @@ import { IoSend, IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineArchive, MdLabelOutline, MdCancel, MdEditNote} from "react-icons/md";
 import toast from "react-hot-toast";
+import CreatableSelect from 'react-select/creatable';
 import ArchiveItem from "./ArchiveItem";
-import './style.css';
 import NoNotes from "../NoNotes";
 import Loader from "../Loader";
 import Failure from "../Failure";
+import './style.css';
 
 const apiStatusConstants = {
     initial: 'INITIAL',
@@ -17,10 +18,50 @@ const apiStatusConstants = {
     failure: 'FAILURE'
 }
 
+const customStyles = {
+    control: (provided, state) => ({
+        ...provided,
+        border: '1px solid #433D8B',
+        borderRadius: '5px',
+        boxShadow: null,
+        '&:hover': {
+            borderColor: '#433D8B',
+        },
+        marginBottom: '0px',
+        width: '100%!important',
+        height: '30px',
+        minHeight: '30px',
+        fontSize: '13px'
+    }),
+    menu: (provided, state) => ({
+        ...provided,
+        marginTop: '0px',
+        paddingTop: '0px',
+    }),
+    dropdownIndicator: (provided) => ({
+        ...provided,
+        color: '#433D8B',
+        '&:hover': {
+            color: '#433D8B',
+        },
+        width: '15px',
+        padding: '0px',
+        margin: '0px',
+        border: '0px',
+    }),
+    option: (provided, state) => ({
+        ...provided,
+        backgroundColor: state.isSelected ? '#433D8B' : null,
+        color: state.isSelected ? 'white' : 'black',
+    }),
+};
+
 const ArchivePage = () => {
     
     const [notesList, setNotesList] = useState([]);
+    const [labelsList, setLabelsList] = useState([]);
     const [showEditNotePopup, setShowEditNotePopup] = useState(false);
+    const [showLabels, setShowLabels] = useState(false);
     const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
     const [note, setNote] = useState({
         title: '',
@@ -58,8 +99,29 @@ const ArchivePage = () => {
         setShowEditNotePopup(false);
     }
 
+    const handleLabelChange = (newValue) => {
+        if(newValue !== null) {
+            if(newValue.__isNew__) {
+                addLabel(newValue.label);
+            } else {
+                if(note.labels.filter(label => label === newValue.label).length === 0 && note.labels.length < 9) {
+                    setNote({
+                        ...note,
+                        labels: [...note.labels, newValue.label]
+                    });
+                }
+            }
+        } else {
+            setNote({
+                ...note,
+                labels: note.labels
+            });
+        }
+    };
+
     useEffect(() => {
         fetchArchiveNotes();
+        fetchLabels();
     }, []);
 
     const fetchArchiveNotes = async () => {
@@ -87,6 +149,62 @@ const ArchivePage = () => {
         } catch (error) {
             console.log(error);
             setApiStatus(apiStatusConstants.failure);
+        }
+    }
+
+    const fetchLabels = async () => {
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/labels';
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${Cookies.get('jwt_token')}`
+            },
+        }
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data)
+                const labels = data.map(label => ({value: label.name, label: label.name}));
+                setLabelsList(labels);
+            } else {
+                console.log(data.error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const addLabel = async (label) => {
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/labels';
+        const options = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${Cookies.get('jwt_token')}`
+            },
+            body: JSON.stringify({name: label})
+        }
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data)
+                fetchLabels();
+                if(note.labels.length < 9) {
+                    setNote({
+                        ...note,
+                        labels: [...note.labels, label]
+                    });
+                }
+                toast.success('Label added');
+            } else {
+                console.log(data.error);
+                toast.error(data.error);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -186,6 +304,17 @@ const ArchivePage = () => {
             <div className="notes-input-container" style={{backgroundColor: note.bg_color ? note.bg_color : '#17153B'}}>
                 <input type="text" className="notes-input" placeholder="Title" name="title" value={note.title} onChange={handleNoteChange} />
                 <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} />
+                <div className="notes-labels-container">
+                    {note.labels.map((label, index) => (
+                        <div key={index} className="notes-label">
+                            <span>{label}</span>
+                            <MdCancel className="notes-label-icon" onClick={() => setNote({
+                                ...note,
+                                labels: note.labels.filter((l, i) => i !== index)
+                            })} />
+                        </div>
+                    ))}
+                </div>
                 <div className="notes-options-container">
                     {/* <div>
                         <button className="edit-note-option-btn">
@@ -201,6 +330,22 @@ const ArchivePage = () => {
                             <IoColorPalette className="edit-note-option-icon" />
                         </button>
                     </div> */}
+                    <div className="notes-option-con">
+                        <button className="notes-option-btn" title="Add Labels" onMouseOver={() => setShowLabels(true)}  onMouseOut={() => setShowLabels(false)}>
+                            <MdLabelOutline className="notes-option-icon" />
+                        </button>
+                        {showLabels &&
+                            <div className="notes-colors" onMouseOver={() => setShowLabels(true)}  onMouseOut={() => setShowLabels(false)}>
+                                <CreatableSelect
+                                    isClearable
+                                    onChange={handleLabelChange}
+                                    options={labelsList}
+                                    placeholder="Select Company"
+                                    styles={customStyles}
+                                />
+                            </div>
+                        }
+                    </div>
                     <button type="button" className="notes-save-button" style={{marginLeft: 'auto'}} onClick={() => editNote(note)}>
                         <IoSend className="notes-save-icon" />
                     </button>

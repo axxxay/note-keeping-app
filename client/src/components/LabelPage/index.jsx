@@ -4,11 +4,11 @@ import { IoSend, IoColorPalette} from "react-icons/io5";
 import {MdOutlineArchive, MdLabelOutline, MdCancel, MdOutlineUnarchive} from "react-icons/md";
 import toast from "react-hot-toast";
 import CreatableSelect from 'react-select/creatable';
-import NoteItem from "./NoteItem";
+import { useParams } from "react-router-dom";
 import Loader from "../Loader";
 import NoNotes from "../NoNotes";
 import Failure from "../Failure";
-import './style.css';
+import LabelItem from "./LabelItem";
 
 const apiStatusConstants = {
     initial: 'INITIAL',
@@ -55,7 +55,7 @@ const customStyles = {
     }),
 };
 
-const NotesPage = () => {
+const LabelPage = () => {
     
     const [notesList, setNotesList] = useState([]);
     const [labelsList, setLabelsList] = useState([]);
@@ -64,10 +64,12 @@ const NotesPage = () => {
     const [showLabels, setShowLabels] = useState(false);
     const [showEditNotePopup, setShowEditNotePopup] = useState(false);
     const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
+    const {label} = useParams();
+
     const [note, setNote] = useState({
         title: '',
         content: '',
-        labels: [],
+        labels: [label],
         bg_color: '',
         archive: false
     });
@@ -131,10 +133,16 @@ const NotesPage = () => {
     useEffect(() => {
         fetchNotes();
         fetchLabels();
-    }, []);
+        setNote({
+            title: '',
+            content: '',
+            labels: [label],
+            bg_color: ''
+        });
+    }, [label]);
 
     const fetchNotes = async () => {
-        const url = process.env.REACT_APP_BACKEND_URL + '/api/notes';
+        const url = process.env.REACT_APP_BACKEND_URL + `/api/labels/${label}/notes`;
         const options = {
             method: 'GET',
             headers: {
@@ -400,7 +408,7 @@ const NotesPage = () => {
         notesList.length !== 0 ? 
         <div className="notes-list-container">
             {notesList.map((note, index) => (
-                <NoteItem key={index} note={note} trashNote={trashNote} archiveNote={archiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
+                <LabelItem key={index} note={note} trashNote={trashNote} archiveNote={archiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
             ))}
         </div>
         :
@@ -496,4 +504,4 @@ const NotesPage = () => {
     );
 }
 
-export default NotesPage;
+export default LabelPage;

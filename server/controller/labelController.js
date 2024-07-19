@@ -61,10 +61,9 @@ const deleteLabel = async (req, res) => {
 
 const getLabeledNotes = async (req, res) => {
     try {
-        const labelId = req.params.id;
+        const label = req.params.label;
         const userId = req.user.id;
-        console.log('labelId:', labelId, 'userId:', userId);
-        const notes = await labelService.getLabeledNotes(labelId, userId);
+        const notes = await labelService.getLabeledNotes(label, userId);
         res.status(200).send(notes);
     } catch (error) {
         console.error('Error getting labeled notes:', error);

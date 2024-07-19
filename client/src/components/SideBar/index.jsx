@@ -1,20 +1,49 @@
 import { MdOutlineLightbulb, MdOutlineArchive, MdLabelOutline } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
-import './style.css';
 import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+import './style.css';
 
 const SideBar = ({setSearchQuery}) => {
 
     const location = useLocation();
     const path = location.pathname;
     const [activeTab, setActiveTab] = useState(path.slice(1) || 'notes');
+    const [labelsList, setLabelsList] = useState([]);
 
     useEffect(() => {
         if(path.slice(1) !== 'search') {
-            setActiveTab(path.slice(1));
+            setActiveTab(path.split('/')[path.split('/').length - 1]);
         }
     }, [path]);
+
+    useEffect(() => {
+        fetchLabels();
+    }, []);
+
+    const fetchLabels = async () => {
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/labels';
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${Cookies.get('jwt_token')}`
+            },
+        }
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data)
+                setLabelsList(data);
+            } else {
+                console.log(data.error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const onClickTab = (tab) => {
         setSearchQuery('');
@@ -35,10 +64,12 @@ const SideBar = ({setSearchQuery}) => {
                 <RiDeleteBin6Line className="sidebar-icon" />
                 <p className="sidebar-item-text">Bin</p>
             </Link>
-            <Link to="/" className={`sidebar-item ${activeTab === 'some' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('some')} >
-                <MdLabelOutline className="sidebar-icon" />
-                <p className="sidebar-item-text">Some</p>
-            </Link>
+            {labelsList.map((label, index) => (
+                <Link to={`/label/${label.name}`} key={index} className={`sidebar-item ${activeTab === label.name ? "active-sidebar-item" : ""}`} onClick={() => onClickTab(label.name)} >
+                    <MdLabelOutline className="sidebar-icon" />
+                    <p className="sidebar-item-text">{label.name}</p>
+                </Link>
+            ))}
         </div>
     );
 }

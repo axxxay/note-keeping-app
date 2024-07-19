@@ -160,14 +160,19 @@ const deleteLabel = async (labelId, userId) => {
     }
 }
 
-const getLabeledNotes = async (labelId, userId) => {
+const getLabeledNotes = async (label, userId) => {
     try {
         const notes = await Note.findAll({
             where: {
-                id: labelId,
+                labels: {
+                    [Op.like]: `%${label}%`
+                },
                 user_id: userId,
                 trashed: 0
             }
+        });
+        notes.forEach(note => {
+            note.labels = note.labels.split(',').map(label => label.trim());
         });
         return notes;
     } catch (error) {

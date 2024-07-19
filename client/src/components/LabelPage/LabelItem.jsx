@@ -3,7 +3,7 @@ import {IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineArchive, MdCancel} from "react-icons/md";
 
-function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorUpdate}) {
+function LabelItem({note, trashNote, archiveNote, openEditNotePopup, handleColorUpdate}) {
 
   const [showActions, setShowActions] = useState(false);
   const [showBgColors, setShowBgColors] = useState(false);
@@ -23,6 +23,7 @@ function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorU
                 ))}
             </div>
         </div>
+        {note.archived && <span className="note-archived">ARCHIVED</span>}
         {showActions &&
         <div className="note-actions">
             <div className="notes-option-con">
@@ -54,4 +55,4 @@ function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorU
   )
 }
 
-export default NoteItem
+export default LabelItem

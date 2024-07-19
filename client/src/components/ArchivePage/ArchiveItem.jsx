@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import {MdOutlineUnarchive, MdLabelOutline, MdCancel} from "react-icons/md";
+import {MdOutlineUnarchive, MdLabelOutline, MdCancel, MdOutlineArchive} from "react-icons/md";
+
 
 function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleColorUpdate}) {
 
@@ -17,6 +18,11 @@ function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleC
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
+            <div className="notes-item-labels-container">
+                {note.labels.map((label, index) => (
+                    <div key={index} className="notes-label">{label}</div>
+                ))}
+            </div>
         </div>
         {showActions &&
         <div className="note-actions">
@@ -37,9 +43,6 @@ function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleC
                     </div>
                 }
             </div>
-            <button className="note-action-btn" title='Labels'>
-                <MdLabelOutline className='note-action-icon' />
-            </button>
             <button className="note-action-btn" onClick={() => unarchiveNote(note.id)} title='Unarchive'>
                 <MdOutlineUnarchive className='note-action-icon' />
             </button>
