@@ -14,9 +14,11 @@ function TrashItem({note, restoreNote, deleteNote}) {
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
             <div className="notes-item-labels-container">
-                {note.labels.map((label, index) => (
-                    <div key={index} className="notes-label">{label}</div>
-                ))}
+                { note.labels[0] !== "" &&
+                    note.labels.map((label, index) => (
+                        <div key={index} className="notes-label">{label}</div>
+                    ))
+                }
             </div>
         </div>
         <span className="note-archived">{formatDate}</span>

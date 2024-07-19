@@ -449,12 +449,13 @@ const NotesPage = () => {
                                         <button className="notes-color" style={{backgroundColor: "transparent"}} onClick={() => handleBgColorChange('')} >
                                             <MdCancel className="notes-color-icon" />
                                         </button>
-                                        <button className="notes-color" style={{backgroundColor: '#f28b82'}} onClick={() => handleBgColorChange('#f28b82')} ></button>
-                                        <button className="notes-color" style={{backgroundColor: '#fbbc04'}} onClick={() => handleBgColorChange('#fbbc04')} ></button>
-                                        <button className="notes-color" style={{backgroundColor: '#fff475'}} onClick={() => handleBgColorChange('#fff475')} ></button>
-                                        <button className="notes-color" style={{backgroundColor: '#ccff90'}} onClick={() => handleBgColorChange('#ccff90')} ></button>
-                                        <button className="notes-color" style={{backgroundColor: '#a7ffeb'}} onClick={() => handleBgColorChange('#a7ffeb')} ></button>
-                                    </div>
+                                        <button className="notes-color" style={{backgroundColor: '#77172e'}} onClick={() => handleBgColorChange('#77172e')} ></button>
+                                            <button className="notes-color" style={{backgroundColor: '#692b17'}} onClick={() => handleBgColorChange('#692b17')} ></button>
+                                            <button className="notes-color" style={{backgroundColor: '#7c4a03'}} onClick={() => handleBgColorChange('#7c4a03')} ></button>
+                                            <button className="notes-color" style={{backgroundColor: '#264d3b'}} onClick={() => handleBgColorChange('#264d3b')} ></button>
+                                            <button className="notes-color" style={{backgroundColor: '#256377'}} onClick={() => handleBgColorChange('#256377')} ></button>
+                                            <button className="notes-color" style={{backgroundColor: '#472e5b'}} onClick={() => handleBgColorChange('#472e5b')} ></button>
+                                        </div>
                                 }
                             </div>
                             {/* <div className="notes-option-con">

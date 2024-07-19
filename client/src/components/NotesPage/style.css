@@ -120,7 +120,7 @@
 
 .notes-list-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     width: 90%;
     margin-top: 30px;
@@ -129,12 +129,13 @@
 
 .note-item {
     width: 21%;
+    min-width: 180px;
     padding: 15px 20px;
     margin-bottom: 20px;
     margin-right: 2%;
     margin-left: 2%;
     border-radius: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border: 1px solid #C8ACD6;
     cursor: pointer;
     min-height: 150px;
@@ -201,7 +202,7 @@
     left: 0px;
     color: #C8ACD6;
     z-index: 1;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bolder;
 }
 
@@ -283,7 +284,9 @@
 
     .note-item {
         width: 46%;
+        min-width: 0%;
         padding: 10px;
+        margin-bottom: 20px;
     }
 
     .note-title {
@@ -319,6 +322,11 @@
 
     .notes-input-container {
         width: 90%;
+    }
+
+    .note-archived {
+        top: -15px;
+        font-size: 11px;
     }
     
     
