@@ -85,10 +85,16 @@ const getArchivedNotes = async (userId) => {
 
 const getTrashedNotes = async (userId) => {
     try {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
         const notes = await Note.findAll({
             where: {
                 user_id: userId,
-                trashed: 1
+                trashed: 1,
+                trashed_at: {
+                    [Op.gte]: thirtyDaysAgo
+                }
             },
             order: [['created_at', 'DESC']]
         });
@@ -172,7 +178,10 @@ const unarchiveNote = async (noteId) => {
 const trashNote = async (noteId) => {
     try {
         await getNote(noteId);
-        result = await Note.update({trashed: 1}, {
+        result = await Note.update({
+            trashed: 1,
+            trashed_at: new Date()
+        }, {
             where: {
                 id: noteId
             }
@@ -187,7 +196,10 @@ const trashNote = async (noteId) => {
 const restoreNote = async (noteId) => {
     try {
         await getNote(noteId);
-        result = await Note.update({trashed: 0}, {
+        result = await Note.update({
+            trashed: 0,
+            trashed_at: null
+        }, {
             where: {
                 id: noteId
             }

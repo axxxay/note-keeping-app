@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { MdDeleteForever, MdRestoreFromTrash} from "react-icons/md";
+import {format} from 'date-fns'
 
 function TrashItem({note, restoreNote, deleteNote}) {
 
   const [showActions, setShowActions] = useState(false);
+
+  const formatDate = format(new Date(note.trashed_at), 'MMM dd, yyyy hh:mm a');
 
   return (
     <div className="note-item" style={{backgroundColor: note.bg_color ? note.bg_color : "#2E236C"}} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
@@ -16,6 +19,7 @@ function TrashItem({note, restoreNote, deleteNote}) {
                 ))}
             </div>
         </div>
+        <span className="note-archived">{formatDate}</span>
         {showActions &&
         <div className="note-actions">
             <button className="note-action-btn" title='Delete Forever'>

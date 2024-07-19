@@ -3,3 +3,22 @@
     font-size: 24px;
     margin-bottom: 20px;
 }
+
+.notes-page-subtitle {
+    color: #dec4eb;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .notes-page-title {
+        font-size: 20px;
+    }
+
+    .notes-page-subtitle {
+        font-size: 12px;
+    }
+    
+}

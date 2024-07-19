@@ -43,6 +43,10 @@ const Note = sequelize.define('notes', {
         type: DataTypes.TEXT,
         allowNull: true,
     },
+    trashed_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,

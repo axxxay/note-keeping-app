@@ -127,6 +127,7 @@ const TrashPage = () => {
     return (
         <div className="notes-page-container">
             <h1 className="notes-page-title">Recycle Bin</h1>
+            <p className="notes-page-subtitle">Notes in the Recycle Bin are deleted after 30 days.</p>
             {renderSwitch()}
         </div>
     );
