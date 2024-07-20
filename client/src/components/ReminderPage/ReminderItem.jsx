@@ -20,7 +20,7 @@ function ReminderItem({note, trashNote, archiveNote, openEditNotePopup, handleCo
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
-            <div className="notes-label" style={{marginTop: "5px"}}>{formatDate}</div>
+            <div className="notes-label" style={{marginTop: "5px", width: "fit-content"}}>{formatDate}</div>
             <div className="notes-item-labels-container">
                 { note.labels[0] !== "" &&
                     note.labels.map((label, index) => (

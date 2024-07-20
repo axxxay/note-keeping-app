@@ -24,7 +24,7 @@ function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleC
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
-            {note.reminder_date && <div className="notes-label" style={{marginTop: "5px"}}>{formatDate}</div>}
+            {note.reminder_date && <div className="notes-label" style={{marginTop: "5px", width: "fit-content"}}>{formatDate}</div>}
             <div className="notes-item-labels-container">
                 { note.labels[0] !== "" &&
                     note.labels.map((label, index) => (
