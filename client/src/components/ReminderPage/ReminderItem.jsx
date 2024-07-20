@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineArchive, MdCancel} from "react-icons/md";
+import { GoClock } from "react-icons/go";
 import { format } from 'date-fns';
 
 function ReminderItem({note, trashNote, archiveNote, openEditNotePopup, handleColorUpdate}) {
@@ -20,7 +21,10 @@ function ReminderItem({note, trashNote, archiveNote, openEditNotePopup, handleCo
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
-            <div className="notes-label" style={{marginTop: "5px", width: "fit-content"}}>{formatDate}</div>
+            <div className="notes-label" style={{marginTop: "5px", width: "fit-content"}}>
+                <GoClock className="notes-label-icon" style={{marginRight: '3px'}} />
+                {formatDate}
+            </div>
             <div className="notes-item-labels-container">
                 { note.labels[0] !== "" &&
                     note.labels.map((label, index) => (

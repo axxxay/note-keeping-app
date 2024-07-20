@@ -55,7 +55,8 @@ const Note = sequelize.define('notes', {
     updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        onUpdate: DataTypes.NOW
     }
   }, {
         freezeTableName: true,

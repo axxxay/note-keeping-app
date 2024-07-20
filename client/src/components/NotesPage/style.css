@@ -284,6 +284,20 @@
     background-color: transparent;
 }
 
+.update-button-con {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.last-edited {
+    color: #C8ACD6;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
 
 @media screen and (max-width: 768px) {
     .notes-page-container {

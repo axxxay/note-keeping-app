@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { IoSend } from "react-icons/io5";
 import { MdLabelOutline, MdCancel } from "react-icons/md";
 import { BiBellPlus } from "react-icons/bi";
+import { GoClock } from "react-icons/go";
 import CreatableSelect from 'react-select/creatable';
 import toast from "react-hot-toast";
 import SearchItem from "./SearchItem";
@@ -335,6 +336,10 @@ const SearchPage = ({search}) => {
     if(note.reminder_date) {
         formatDate = format(new Date(note.reminder_date), 'MMM dd, yyyy hh:mm a');
     }
+    let editedDate = null;
+    if(note.updated_at) {
+        editedDate = format(new Date(note.updated_at), 'MMM dd, yyyy hh:mm a');
+    }
 
     const renderEditNotePopup = (note) => (
         <div className="notes-update-popup-container">
@@ -344,6 +349,7 @@ const SearchPage = ({search}) => {
                 <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} />
                 {note.reminder_date &&
                     <div className="notes-label" style={{alignSelf: "flex-start", marginLeft: '15px'}}>
+                        <GoClock className="notes-label-icon" style={{marginRight: '3px'}} />
                         <span>{formatDate}</span>
                         <MdCancel className="notes-label-icon" onClick={() => setNote({
                             ...note,
@@ -403,9 +409,12 @@ const SearchPage = ({search}) => {
                             </div>
                         }
                     </div>
-                    <button type="button" className="notes-save-button" style={{marginLeft: 'auto'}} onClick={() => editNote(note)}>
-                        <IoSend className="notes-save-icon" />
-                    </button>
+                    <div className="update-button-con">
+                        <span className="last-edited">Edited: {editedDate}</span>
+                        <button type="button" className="notes-save-button" onClick={() => editNote(note)}>
+                            <IoSend className="notes-save-icon" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
