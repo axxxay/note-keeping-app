@@ -90,9 +90,10 @@ const updateNoteLabels = async (oldLabel, label, userId) => {
 
 const updateLabel = async (labelId, label, userId) => {
     let transaction;
+    console.log(label);
     try {
         validateLabel(label);
-        await getLabel(labelId, userId);
+        const oldLabel = await getLabel(labelId, userId);
         const existingLabel = await getLabelByName(label.name, userId);
         if (existingLabel) {
             const error = new Error('Label already exists');
@@ -107,7 +108,7 @@ const updateLabel = async (labelId, label, userId) => {
                     user_id: userId
                 },
             });
-        await updateNoteLabels(label.oldLabel, label.name, userId);
+        await updateNoteLabels(oldLabel.name, label.name, userId);
         // await transaction.commit(); // Commit the transaction
         return {success: "Label updated successfully"}
     } catch (error) {
@@ -117,7 +118,7 @@ const updateLabel = async (labelId, label, userId) => {
     }
 }
 
-const deleteNoteLabels = async (label, userId, transaction) => {
+const deleteNoteLabels = async (label, userId) => {
     try {
         const notes = await Note.findAll({
             where: {
@@ -126,12 +127,20 @@ const deleteNoteLabels = async (label, userId, transaction) => {
                 },
                 user_id: userId
             },
-            transaction
+            
         });
         for (const note of notes) {
             note.labels = note.labels.split(',').map(l => l.trim());
             const updatedLabels = note.labels.filter(l => l !== label);
-            await Note.update({ labels: updatedLabels.join(',') }, { where: { id: note.id, user_id, userId } }, { transaction });
+            await Note.update({
+                labels: updatedLabels.join(',') 
+            }, 
+            { 
+                where: { 
+                    id: note.id, 
+                    user_id: userId
+                } 
+            });
         }
         return {success: "Note labels deleted successfully"}
     } catch (error) {
@@ -143,18 +152,18 @@ const deleteNoteLabels = async (label, userId, transaction) => {
 const deleteLabel = async (labelId, userId) => {
     let transaction;
     try {
-        transaction = await sequelize.transaction(); // Start a transaction
-        await getLabel(labelId, userId);
+        // transaction = await sequelize.transaction(); // Start a transaction
+        const label = await getLabel(labelId, userId);
         await Label.destroy({
             where: {
                 id: labelId,
                 user_id: userId
             }});
-        await deleteNoteLabels(labelId, userId, transaction);
-        await transaction.commit(); // Commit the transaction
+        await deleteNoteLabels(label.name, userId);
+        // await transaction.commit(); // Commit the transaction
         return {success: "Label deleted successfully"}
     } catch (error) {
-        await transaction.rollback(); // Rollback the transaction
+        // await transaction.rollback(); // Rollback the transaction
         console.error('Error deleting label:', error);
         throw error;
     }

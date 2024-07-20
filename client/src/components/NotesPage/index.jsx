@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import { IoSend, IoColorPalette} from "react-icons/io5";
-import {MdOutlineArchive, MdLabelOutline, MdCancel, MdOutlineUnarchive} from "react-icons/md";
+import { MdLabelOutline, MdCancel } from "react-icons/md";
 import toast from "react-hot-toast";
 import CreatableSelect from 'react-select/creatable';
 import NoteItem from "./NoteItem";
@@ -83,13 +83,6 @@ const NotesPage = () => {
         setNote({
             ...note,
             bg_color: color
-        });
-    }
-
-    const handleArchiveChange = (archive) => {
-        setNote({
-            ...note,
-            archive: archive
         });
     }
 

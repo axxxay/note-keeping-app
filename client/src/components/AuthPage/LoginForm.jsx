@@ -1,10 +1,12 @@
 import Cookies from 'js-cookie';
 import { useState } from 'react';
+import { Oval } from 'react-loader-spinner';
 import {  useNavigate, Navigate } from 'react-router-dom';
 
 
 function LoginForm({setToggleLogin}) {
 
+  const [loader, setLoader] = useState(false);
   const [error, setError] = useState('');
   const [loginData, setLoginData] = useState({
     email: '',
@@ -36,6 +38,7 @@ function LoginForm({setToggleLogin}) {
       },
       body: JSON.stringify(loginData)
     }
+    setLoader(true);
     try {
       const response = await fetch(url, options);
       const data = await response.json();
@@ -51,6 +54,7 @@ function LoginForm({setToggleLogin}) {
       console.log(error);
       setError('Something went wrong. Please try again later.');
     }
+    setLoader(false);
   }
 
   if(Cookies.get('jwt_token')) {
@@ -65,7 +69,23 @@ function LoginForm({setToggleLogin}) {
         <label htmlFor="password" className='auth-label'>PASSWORD</label>
         <input type="password" id="password" className='auth-input' value={loginData.password} onChange={handleChange} />
         { error && <p className='auth-error'>{error}</p> }
-        <button type="submit" className='auth-btn'>Login</button>
+        <button type="submit" className='auth-btn'>
+          { loader ?
+            <Oval
+            visible={true}
+            height="19"
+            width="19"
+            color="#C8ACD6"
+            secondaryColor='#f0f0f0'
+            strokeWidth={3}
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            />
+            :
+            "Login"
+          }
+        </button>
         <p className='auth-para'>Don't have an account? <span className='auth-link' onClick={() => setToggleLogin(false)}>Register</span></p>
     </form>
   )

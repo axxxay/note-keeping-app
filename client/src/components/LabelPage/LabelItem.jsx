@@ -25,7 +25,7 @@ function LabelItem({note, trashNote, archiveNote, openEditNotePopup, handleColor
                 }
             </div>
         </div>
-        {note.archived && <span className="note-archived">ARCHIVED</span>}
+        {(note.archived === 1) && <span className="note-archived">ARCHIVED</span>}
         {showActions &&
         <div className="note-actions">
             <div className="notes-option-con">

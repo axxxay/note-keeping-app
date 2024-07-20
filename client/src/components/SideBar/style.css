@@ -66,6 +66,125 @@
     display: none;
 }
 
+.sidebar-item-btn {
+    border: 0px;
+    background-color: transparent;
+    width: 91%;
+}
+
+.label-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 10vh;
+    left: 0px;
+    width: 100%;
+    height: 90vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.label-popup-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+}
+
+.label-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    max-width: 360px;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #C8ACD6;
+    border-radius: 15px;
+    background-color: #2E236C;
+    padding: 20px;
+}
+
+.label-popup-heading {
+    font-size: 20px;
+    font-weight: bold;
+    color: #efd9fa;
+    margin-bottom: 20px;
+    align-self: flex-start;
+}
+
+.label-popup-input-con {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.label-popup-input {
+    width: 100%;
+    padding: 5px 0px;
+    border: 0px;
+    background-color: transparent;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    margin-left: 10px;
+}
+
+.label-popup-input:hover {
+    border-bottom: 1px solid #C8ACD6;
+}
+
+.label-create-btn {
+    padding: 10px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.checkmark-icon {
+    color: #C8ACD6;
+    font-size: 24px;
+}
+
+.label-popup-list {
+    width: 100%;
+}
+
+.label-popup-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0px;
+}
+
+.label-popup-icon {
+    color: #C8ACD6;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sidebar-loader-con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 25px;
+}
+
 @media screen and (max-width: 768px) {
     .sidebar-container {
         display: none;

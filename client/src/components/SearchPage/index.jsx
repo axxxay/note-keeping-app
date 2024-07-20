@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
-import { IoSend, IoColorPalette} from "react-icons/io5";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import {MdOutlineArchive, MdLabelOutline, MdCancel, MdEditNote} from "react-icons/md";
+import { IoSend } from "react-icons/io5";
+import { MdLabelOutline, MdCancel } from "react-icons/md";
 import CreatableSelect from 'react-select/creatable';
 import toast from "react-hot-toast";
 import SearchItem from "./SearchItem";

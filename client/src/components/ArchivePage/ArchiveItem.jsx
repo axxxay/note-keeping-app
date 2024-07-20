@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import {MdOutlineUnarchive, MdLabelOutline, MdCancel, MdOutlineArchive} from "react-icons/md";
+import {MdOutlineUnarchive, MdCancel} from "react-icons/md";
 
 
 function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleColorUpdate}) {

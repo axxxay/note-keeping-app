@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import './style.css'
+import { Oval } from 'react-loader-spinner';
+import toast from 'react-hot-toast';
 
 function RegistrationForm({setToggleLogin}) {
 
+  const [loader, setLoader] = useState(false);
   const [error, setError] = useState('');
   const [registerData, setRegisterData] = useState({
     username: '',
@@ -33,12 +36,14 @@ function RegistrationForm({setToggleLogin}) {
       },
       body: JSON.stringify(registerData)
     }
+    setLoader(true);
     try {
       const response = await fetch(url, options);
       const data = await response.json();
       if (response.ok) {
         setError('');
         setToggleLogin(true);
+        toast.success('Account created successfully. Please login to continue.');
       } else {
         setError(data.error);
       }
@@ -46,6 +51,7 @@ function RegistrationForm({setToggleLogin}) {
       console.log(error);
       setError('Something went wrong. Please try again later.');
     }
+    setLoader(false);
   }
   return (
     <form className='auth-form' onSubmit={handleSignUp}>
@@ -57,7 +63,23 @@ function RegistrationForm({setToggleLogin}) {
         <label htmlFor="password" className='auth-label'>PASSWORD</label>
         <input type="password" id="password" className='auth-input' value={registerData.password} onChange={handleChange} />
         {error && <p className='auth-error'>{error}</p>}
-        <button type="submit" className='auth-btn'>Sign Up</button>
+        <button type="submit" className='auth-btn'>
+          { loader ?
+            <Oval
+            visible={true}
+            height="19"
+            width="19"
+            color="#C8ACD6"
+            secondaryColor='#f0f0f0'
+            strokeWidth={3}
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            />
+            :
+            "Sign Up"
+          }
+        </button>
         <p className='auth-para'>Already have an account? <span className='auth-link' onClick={() => setToggleLogin(true)}>Login</span></p>
     </form>
   )

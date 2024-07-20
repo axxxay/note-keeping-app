@@ -23,10 +23,6 @@ function App() {
     setSearchQuery(e.target.value);
   }
 
-  const handleSideBar = () => {
-    setShowSideBar(!showSideBar);
-  }
-
   const location = useLocation();
   const path = location.pathname;
 
