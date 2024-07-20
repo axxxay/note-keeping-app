@@ -198,7 +198,7 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
                 <RiDeleteBin6Line className="sidebar-icon" />
                 <p className="sidebar-item-text">Bin</p>
             </Link>
-            <button className="sidebar-item sidebar-item-btn" onClick={() => setShowLabelPopup(true)}>
+            <button className="sidebar-item sidebar-item-btn" onClick={() => {setShowLabelPopup(true); setShowSideBar(false)}}>
                 <MdOutlineEdit className="sidebar-icon" />
                 <p className="sidebar-item-text">Edit labels</p>
             </button>
