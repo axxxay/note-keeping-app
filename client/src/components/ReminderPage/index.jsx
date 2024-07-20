@@ -58,6 +58,14 @@ const customStyles = {
 };
 
 const ReminderPage = () => {
+
+    function setNextHourReminder() {
+        let currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() + 1);
+        currentDate.setMinutes(0);
+        currentDate.setSeconds(0);
+        return currentDate;
+    }
     
     const [notesList, setNotesList] = useState([]);
     const [labelsList, setLabelsList] = useState([]);
@@ -75,7 +83,7 @@ const ReminderPage = () => {
         labels: [label],
         bg_color: '',
         archive: false,
-        reminder_date: null
+        reminder_date: setNextHourReminder()
     });
 
     const handleNoteChange = (e) => {
@@ -103,7 +111,7 @@ const ReminderPage = () => {
             content: '',
             labels: [],
             bg_color: '',
-            reminder_date: null
+            reminder_date: setNextHourReminder()
         });
         setShowEditNotePopup(false);
     }
@@ -136,7 +144,7 @@ const ReminderPage = () => {
             content: '',
             labels: [label],
             bg_color: '',
-            reminder_date: null
+            reminder_date: setNextHourReminder()
         });
     }, [label]);
 
@@ -245,7 +253,7 @@ const ReminderPage = () => {
                     content: '',
                     labels: [],
                     bg_color: '',
-                    reminder_date: null
+                    reminder_date: setNextHourReminder()
                 });
                 fetchNotes();
                 toast.success('Note saved');
@@ -329,7 +337,7 @@ const ReminderPage = () => {
                     content: '',
                     labels: [],
                     bg_color: '',
-                    reminder_date: null
+                    reminder_date: setNextHourReminder()
                 });
                 fetchNotes();
                 toast.success('Note updated');
