@@ -186,7 +186,7 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
     return (
         <>
         <div className={` ${showSideBar ? "sidebar-overlay" : ""}`} onClick={() => setShowSideBar(false)}></div>
-        <div className={`sidebar-container ${showSideBar ? "sidebar-mobile-container" : ""}`}>
+        <div className={`sidebar-container ${showSideBar && window.innerWidth <= 768 ? "sidebar-mobile-container" : ""}`}>
             <Link to="/notes" className={`sidebar-item ${activeTab === 'notes' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('notes')} >
                 <MdOutlineLightbulb className="sidebar-icon" />
                 <p className="sidebar-item-text">Notes</p>

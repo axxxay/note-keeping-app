@@ -187,12 +187,17 @@
 
 @media screen and (max-width: 768px) {
     .sidebar-container {
-        display: none;
+        /* display: none; */
+        left: -80%;
+        transition: left 1s ease-out;
     }
 
     .sidebar-mobile-container {
         display: block;
         width: 80%;
+        max-width: 350px;
+        left: 0%;
+        transition: left 0.5s ease-in;
     }
 
     .sidebar-overlay {
