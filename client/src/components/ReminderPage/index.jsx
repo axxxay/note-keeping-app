@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import { IoSend, IoColorPalette} from "react-icons/io5";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import {MdOutlineArchive, MdLabelOutline, MdCancel, MdEditNote} from "react-icons/md";
+import { MdLabelOutline, MdCancel } from "react-icons/md";
 import { BiBellPlus } from "react-icons/bi";
 import toast from "react-hot-toast";
 import CreatableSelect from 'react-select/creatable';
-import ArchiveItem from "./ArchiveItem";
-import NoNotes from "../NoNotes";
+import { useParams } from "react-router-dom";
 import Loader from "../Loader";
+import NoNotes from "../NoNotes";
 import Failure from "../Failure";
-import './style.css';
+import ReminderItem from "./ReminderItem";
 import { format } from "date-fns";
 
 const apiStatusConstants = {
@@ -58,19 +57,24 @@ const customStyles = {
     }),
 };
 
-const ArchivePage = () => {
+const ReminderPage = () => {
     
     const [notesList, setNotesList] = useState([]);
     const [labelsList, setLabelsList] = useState([]);
-    const [showEditNotePopup, setShowEditNotePopup] = useState(false);
-    const [showLabels, setShowLabels] = useState(false);
+    const [showTextArea, setShowTextArea] = useState(false);
+    const [showBgColors, setShowBgColors] = useState(false);
     const [showReminder, setShowReminder] = useState(false);
+    const [showLabels, setShowLabels] = useState(false);
+    const [showEditNotePopup, setShowEditNotePopup] = useState(false);
     const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
+    const {label} = useParams();
+
     const [note, setNote] = useState({
         title: '',
         content: '',
-        labels: [],
+        labels: [label],
         bg_color: '',
+        archive: false,
         reminder_date: null
     });
 
@@ -125,12 +129,19 @@ const ArchivePage = () => {
     };
 
     useEffect(() => {
-        fetchArchiveNotes();
+        fetchNotes();
         fetchLabels();
-    }, []);
+        setNote({
+            title: '',
+            content: '',
+            labels: [label],
+            bg_color: '',
+            reminder_date: null
+        });
+    }, [label]);
 
-    const fetchArchiveNotes = async () => {
-        const url = process.env.REACT_APP_BACKEND_URL + '/api/notes/archived';
+    const fetchNotes = async () => {
+        const url = process.env.REACT_APP_BACKEND_URL + `/api/notes/reminder`;
         const options = {
             method: 'GET',
             headers: {
@@ -213,6 +224,40 @@ const ArchivePage = () => {
         }
     }
 
+    const saveNote = async () => {
+        console.log(note);
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/notes';
+        const options = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${Cookies.get('jwt_token')}`
+            },
+            body: JSON.stringify(note)
+        }
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data)
+                setNote({
+                    title: '',
+                    content: '',
+                    labels: [],
+                    bg_color: '',
+                    reminder_date: null
+                });
+                fetchNotes();
+                toast.success('Note saved');
+            } else {
+                console.log(data.error);
+                toast.error(data.error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const trashNote = async (id) => {
         const url = process.env.REACT_APP_BACKEND_URL + `/api/notes/${id}/trash`;
         const options = {
@@ -227,7 +272,7 @@ const ArchivePage = () => {
             const data = await response.json();
             if (response.ok) {
                 console.log(data)
-                fetchArchiveNotes();
+                fetchNotes();
                 toast.success('Note deleted');
             } else {
                 console.log(data.error);
@@ -238,8 +283,8 @@ const ArchivePage = () => {
         }
     }
 
-    const unarchiveNote = async (id) => {
-        const url = process.env.REACT_APP_BACKEND_URL + `/api/notes/${id}/unarchive`;
+    const archiveNote = async (id) => {
+        const url = process.env.REACT_APP_BACKEND_URL + `/api/notes/${id}/archive`;
         const options = {
             method: 'PUT',
             headers: {
@@ -252,8 +297,8 @@ const ArchivePage = () => {
             const data = await response.json();
             if (response.ok) {
                 console.log(data)
-                fetchArchiveNotes();
-                toast.success('Note unarchived');
+                fetchNotes();
+                toast.success('Note archived');
             } else {
                 console.log(data.error);
                 toast.error(data.error);
@@ -286,7 +331,7 @@ const ArchivePage = () => {
                     bg_color: '',
                     reminder_date: null
                 });
-                fetchArchiveNotes();
+                fetchNotes();
                 toast.success('Note updated');
                 setShowEditNotePopup(false);
             } else {
@@ -399,7 +444,7 @@ const ArchivePage = () => {
         notesList.length !== 0 ? 
         <div className="notes-list-container">
             {notesList.map((note, index) => (
-                <ArchiveItem key={index} note={note} trashNote={trashNote} unarchiveNote={unarchiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
+                <ReminderItem key={index} note={note} trashNote={trashNote} archiveNote={archiveNote} openEditNotePopup={openEditNotePopup} handleColorUpdate={handleColorUpdate} />
             ))}
         </div>
         :
@@ -413,19 +458,107 @@ const ArchivePage = () => {
             case apiStatusConstants.success:
                 return renderNotesList();
             case apiStatusConstants.failure:
-                return <Failure fetchNotes={fetchArchiveNotes} />
+                return <Failure fetchNotes={fetchNotes} />
             default:
                 return null;
         }
     }
+      
 
     return (
         <div className="notes-page-container">
-            <h1 className="notes-page-title">Archive</h1>
+            <div className="notes-input-container" style={{backgroundColor: note.bg_color ? note.bg_color : 'transparent'}} onClick={() => setShowTextArea(true)} onMouseLeave={() => setShowTextArea(false)}>
+                <input type="text" className="notes-input" placeholder={`${showTextArea ? "Title" : "Take a note..."}`} name="title" value={note.title} onChange={handleNoteChange} />
+                {showTextArea &&
+                    <>
+                    <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} />
+                    {note.reminder_date &&
+                        <div className="notes-label" style={{alignSelf: "flex-start", marginLeft: '15px'}}>
+                            <span>{formatDate}</span>
+                            <MdCancel className="notes-label-icon" onClick={() => setNote({
+                                ...note,
+                                reminder_date: null
+                            })} />
+                        </div>
+                    }
+                    <div className="notes-labels-container">
+                        {note.labels.map((label, index) => (
+                            <div key={index} className="notes-label">
+                                <span>{label}</span>
+                                <MdCancel className="notes-label-icon" onClick={() => setNote({
+                                    ...note,
+                                    labels: note.labels.filter((l, i) => i !== index)
+                                })} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="notes-options-container">
+                        <div className="notes-options">
+                            <div className="notes-option-con">
+                                <button className="notes-option-btn" title="Background Colors" onMouseOver={() => setShowBgColors(true)}  onMouseOut={() => setShowBgColors(false)}>
+                                    <IoColorPalette className="notes-option-icon" />
+                                </button>
+                                {showBgColors &&
+                                    <div className="notes-colors" onMouseOver={() => setShowBgColors(true)}  onMouseOut={() => setShowBgColors(false)}>
+                                        <button className="notes-color" style={{backgroundColor: "transparent"}} onClick={() => handleBgColorChange('')} >
+                                            <MdCancel className="notes-color-icon" />
+                                        </button>
+                                        <button className="notes-color" style={{backgroundColor: '#77172e'}} onClick={() => handleBgColorChange('#77172e')} ></button>
+                                        <button className="notes-color" style={{backgroundColor: '#692b17'}} onClick={() => handleBgColorChange('#692b17')} ></button>
+                                        <button className="notes-color" style={{backgroundColor: '#7c4a03'}} onClick={() => handleBgColorChange('#7c4a03')} ></button>
+                                        <button className="notes-color" style={{backgroundColor: '#264d3b'}} onClick={() => handleBgColorChange('#264d3b')} ></button>
+                                        <button className="notes-color" style={{backgroundColor: '#256377'}} onClick={() => handleBgColorChange('#256377')} ></button>
+                                        <button className="notes-color" style={{backgroundColor: '#472e5b'}} onClick={() => handleBgColorChange('#472e5b')} ></button>
+                                    </div>
+                                }
+                            </div>
+                            <div className="notes-option-con">
+                                <button className="notes-option-btn" title="Background Colors" onMouseOver={() => setShowReminder(true)}  onMouseOut={() => setShowReminder(false)}>
+                                    <BiBellPlus className="notes-option-icon" />
+                                </button>
+                                {showReminder &&
+                                    <div className="notes-colors" onMouseOver={() => setShowReminder(true)}  onMouseOut={() => setShowReminder(false)}>
+                                        <input type="datetime-local" min={minDateTime} className="reminder-datetime" name='reminder_date' value={note.reminder_date} onChange={handleNoteChange} />
+                                    </div>
+                                }
+                            </div>
+                            {/* <div className="notes-option-con">
+                                <button className="notes-option-btn" title="Archive" onClick={note.archive ? () => handleArchiveChange(false) : () => handleArchiveChange(true)}>
+                                    {note.archive ?
+                                        <MdOutlineUnarchive className="notes-option-icon"/>
+                                        :
+                                        <MdOutlineArchive className="notes-option-icon"/>
+                                    }
+                                </button>
+                            </div> */}
+                            <div className="notes-option-con">
+                                <button className="notes-option-btn" title="Add Labels" onMouseOver={() => setShowLabels(true)}  onMouseOut={() => setShowLabels(false)}>
+                                    <MdLabelOutline className="notes-option-icon" />
+                                </button>
+                                {showLabels &&
+                                    <div className="notes-colors" onMouseOver={() => setShowLabels(true)}  onMouseOut={() => setShowLabels(false)}>
+                                        <CreatableSelect
+                                            isClearable
+                                            onChange={handleLabelChange}
+                                            options={labelsList}
+                                            placeholder="Select Company"
+                                            styles={customStyles}
+                                        />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <button type="button" className="notes-save-button" onClick={saveNote}>
+                            <IoSend className="notes-save-icon" />
+                        </button>
+                    </div>
+                    </>
+                }
+            </div>
             {renderSwitch()}
             {showEditNotePopup && renderEditNotePopup(note)}
         </div>
     );
 }
 
-export default ArchivePage;
+export default ReminderPage;

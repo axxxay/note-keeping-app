@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineArchive, MdCancel} from "react-icons/md";
 import { format } from 'date-fns';
 
-function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorUpdate}) {
+function ReminderItem({note, trashNote, archiveNote, openEditNotePopup, handleColorUpdate}) {
 
   const [showActions, setShowActions] = useState(false);
   const [showBgColors, setShowBgColors] = useState(false);
@@ -13,17 +13,14 @@ function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorU
         handleColorUpdate(note, color);
     }
 
-    let formatDate = null;
-    if(note.reminder_date !== ""){
-        formatDate = format(new Date(note.reminder_date), 'MMM dd, yyyy hh:mm a');
-    }
+    const formatDate = format(new Date(note.reminder_date), 'MMM dd, yyyy hh:mm a');
 
   return (
     <div className="note-item" style={{backgroundColor: note.bg_color ? note.bg_color : "#2E236C"}} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
-            {note.reminder_date && <div className="notes-label" style={{marginTop: "5px"}}>{formatDate}</div>}
+            <div className="notes-label" style={{marginTop: "5px"}}>{formatDate}</div>
             <div className="notes-item-labels-container">
                 { note.labels[0] !== "" &&
                     note.labels.map((label, index) => (
@@ -32,6 +29,7 @@ function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorU
                 }
             </div>
         </div>
+        {(note.archived === 1) && <span className="note-archived">ARCHIVED</span>}
         {showActions &&
         <div className="note-actions">
             <div className="notes-option-con">
@@ -64,4 +62,4 @@ function NoteItem({note, trashNote, archiveNote, openEditNotePopup, handleColorU
   )
 }
 
-export default NoteItem
+export default ReminderItem

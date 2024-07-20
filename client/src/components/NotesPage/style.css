@@ -196,6 +196,17 @@
     z-index: 100;
 }
 
+.reminder-datetime {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e4c7f2;
+    color: #0f0d29;
+    font-size: 14px;
+    outline: none;
+}
+
 .note-archived {
     position: absolute;
     top: -20px;

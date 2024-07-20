@@ -48,6 +48,15 @@ const getTrashedNotes = async (req, res) => {
     }
 }
 
+const getReminderNotes = async (req, res) => {
+    try {
+        const notes = await noteService.getReminderNotes(req.user.id);
+        res.status(200).json(notes);
+    } catch (error) {
+        res.status(error.statusCode || 500).json({error: error.message});
+    }
+}
+
 const getNote = async (req, res) => {
     try {
         const note = await noteService.getNote(req.params.id);
@@ -118,6 +127,7 @@ module.exports = {
     getNotes, 
     getArchivedNotes, 
     getTrashedNotes, 
+    getReminderNotes,
     getNote, 
     updateNote, 
     archiveNote, 

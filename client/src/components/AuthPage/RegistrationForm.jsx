@@ -57,11 +57,11 @@ function RegistrationForm({setToggleLogin}) {
     <form className='auth-form' onSubmit={handleSignUp}>
         <h1 className='auth-heading'>Sign Up</h1>
         <label htmlFor="username" className='auth-label'>USERNAME</label>
-        <input type="text" id="username" className='auth-input' value={registerData.username} onChange={handleChange} />
+        <input type="text" id="username" className='auth-input' placeholder='John Doe' value={registerData.username} onChange={handleChange} />
         <label htmlFor="email" className='auth-label'>EMAIL</label>
-        <input type="email" id="email" className='auth-input' value={registerData.email} onChange={handleChange} />
+        <input type="email" id="email" className='auth-input' placeholder='John@mail.com' value={registerData.email} onChange={handleChange} />
         <label htmlFor="password" className='auth-label'>PASSWORD</label>
-        <input type="password" id="password" className='auth-input' value={registerData.password} onChange={handleChange} />
+        <input type="password" id="password" className='auth-input' placeholder='Password' value={registerData.password} onChange={handleChange} />
         {error && <p className='auth-error'>{error}</p>}
         <button type="submit" className='auth-btn'>
           { loader ?

@@ -108,6 +108,30 @@ const getTrashedNotes = async (userId) => {
     }
 }
 
+const getReminderNotes = async (userId) => {
+    try {
+        const now = new Date();
+
+        const notes = await Note.findAll({
+            where: {
+                user_id: userId,
+                trashed: 0,
+                reminder_date: {
+                    [Op.gt]: now
+                }
+            },
+            order: [['reminder_date', 'ASC']]
+        });
+        notes.forEach(note => {
+            note.labels = note.labels.split(',').map(label => label.trim());
+        });
+        return notes;
+    } catch (error) {
+        console.error('Error getting reminder notes:', error);
+        throw error;
+    }
+}
+
 const getNote = async (noteId) => {
     try {
         const note = await Note.findOne({
@@ -232,6 +256,7 @@ module.exports = {
     getNotes, 
     getArchivedNotes, 
     getTrashedNotes, 
+    getReminderNotes,
     getNote, 
     updateNote, 
     archiveNote, 

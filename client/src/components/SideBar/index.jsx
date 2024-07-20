@@ -2,6 +2,7 @@ import { MdOutlineLightbulb, MdOutlineArchive, MdLabelOutline, MdOutlineEdit } f
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import { IoCheckmarkOutline } from "react-icons/io5";
+import { CgBell } from "react-icons/cg";
 import { IoMdAdd } from "react-icons/io";
 import { RotatingLines } from 'react-loader-spinner'
 import { useEffect, useState } from "react";
@@ -189,6 +190,10 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
             <Link to="/notes" className={`sidebar-item ${activeTab === 'notes' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('notes')} >
                 <MdOutlineLightbulb className="sidebar-icon" />
                 <p className="sidebar-item-text">Notes</p>
+            </Link>
+            <Link to="/reminder" className={`sidebar-item ${activeTab === 'reminder' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('reminder')} >
+                <CgBell className="sidebar-icon" />
+                <p className="sidebar-item-text">Reminders</p>
             </Link>
             <Link to="/archive" className={`sidebar-item ${activeTab === 'archive' ? "active-sidebar-item" : ""}`} onClick={() => onClickTab('archive')} >
                 <MdOutlineArchive className="sidebar-icon" />

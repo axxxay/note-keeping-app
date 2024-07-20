@@ -12,6 +12,7 @@ import TrashPage from './components/TrashPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import SearchPage from './components/SearchPage';
 import LabelPage from './components/LabelPage';
+import ReminderPage from './components/ReminderPage';
 import './App.css';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route exact path="/notes" element={<ProtectedRoute  element={<NotesPage />} />} />
           <Route exact path="/archive" element={<ProtectedRoute element={<ArchivePage />} />} />
           <Route exact path="/bin" element={<ProtectedRoute element={<TrashPage />} />} />
+          <Route exact path='/reminder' element={<ProtectedRoute element={<ReminderPage />} />} />
           <Route exact path='/label/:label' element={<ProtectedRoute element={<LabelPage />} />} />
           <Route exact path="/search" element={<ProtectedRoute element={<SearchPage search={searchQuery} />} />} />
           <Route path="*" element={<Navigate to="/" replace />} />

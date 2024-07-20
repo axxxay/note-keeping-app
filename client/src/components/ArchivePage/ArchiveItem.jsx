@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {IoColorPalette} from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineUnarchive, MdCancel} from "react-icons/md";
+import { format } from 'date-fns';
 
 
 function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleColorUpdate}) {
@@ -13,11 +14,17 @@ function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleC
         handleColorUpdate(note, color);
     }
 
+    let formatDate = null;
+    if(note.reminder_date){
+        formatDate = format(new Date(note.reminder_date), 'MMM dd, yyyy hh:mm a');
+    }
+
   return (
     <div className="note-item" style={{backgroundColor: note.bg_color ? note.bg_color : "#2E236C"}} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
             <p className="note-content">{note.content}</p>
+            {note.reminder_date && <div className="notes-label" style={{marginTop: "5px"}}>{formatDate}</div>}
             <div className="notes-item-labels-container">
                 { note.labels[0] !== "" &&
                     note.labels.map((label, index) => (

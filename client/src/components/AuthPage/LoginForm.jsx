@@ -65,9 +65,9 @@ function LoginForm({setToggleLogin}) {
     <form className='auth-form' onSubmit={handleLogin}>
         <h1 className='auth-heading'>Login</h1>
         <label htmlFor="email" className='auth-label'>EMAIL</label>
-        <input type="email" id="email" className='auth-input' value={loginData.email} onChange={handleChange} />
+        <input type="email" id="email" className='auth-input' placeholder='John@mail.com' value={loginData.email} onChange={handleChange} />
         <label htmlFor="password" className='auth-label'>PASSWORD</label>
-        <input type="password" id="password" className='auth-input' value={loginData.password} onChange={handleChange} />
+        <input type="password" id="password" className='auth-input' placeholder='Password' value={loginData.password} onChange={handleChange} />
         { error && <p className='auth-error'>{error}</p> }
         <button type="submit" className='auth-btn'>
           { loader ?

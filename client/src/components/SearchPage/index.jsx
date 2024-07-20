@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import { IoSend } from "react-icons/io5";
 import { MdLabelOutline, MdCancel } from "react-icons/md";
+import { BiBellPlus } from "react-icons/bi";
 import CreatableSelect from 'react-select/creatable';
 import toast from "react-hot-toast";
 import SearchItem from "./SearchItem";
 import Loader from "../Loader";
 import NoNotes from "../NoNotes";
 import Failure from "../Failure";
+import { format } from "date-fns";
 
 const apiStatusConstants = {
     initial: 'INITIAL',
@@ -59,13 +61,15 @@ const SearchPage = ({search}) => {
     const [notesList, setNotesList] = useState([]);
     const [labelsList, setLabelsList] = useState([]);
     const [showEditNotePopup, setShowEditNotePopup] = useState(false);
+    const [showReminder, setShowReminder] = useState(false);
     const [showLabels, setShowLabels] = useState(false);
     const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
     const [note, setNote] = useState({
         title: '',
         content: '',
         labels: [],
-        bg_color: ''
+        bg_color: '',
+        reminder_date: null
     });
 
     const handleNoteChange = (e) => {
@@ -85,7 +89,8 @@ const SearchPage = ({search}) => {
             title: '',
             content: '',
             labels: [],
-            bg_color: ''
+            bg_color: '',
+            reminder_date: null
         });
         setShowEditNotePopup(false);
     }
@@ -294,7 +299,8 @@ const SearchPage = ({search}) => {
                     title: '',
                     content: '',
                     labels: [],
-                    bg_color: ''
+                    bg_color: '',
+                    reminder_date: null
                 });
                 fetchNotes();
                 toast.success('Note updated');
@@ -314,12 +320,37 @@ const SearchPage = ({search}) => {
         await editNote(note);
     }
 
+    const formatDateToDateTimeLocal = (date) => {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+      
+    const minDateTime = formatDateToDateTimeLocal(new Date());
+
+    let formatDate = null;
+    if(note.reminder_date) {
+        formatDate = format(new Date(note.reminder_date), 'MMM dd, yyyy hh:mm a');
+    }
+
     const renderEditNotePopup = (note) => (
         <div className="notes-update-popup-container">
             <div className="notes-update-popup-overlay" onClick={closeEditNotePopup}></div>
             <div className="notes-input-container" style={{backgroundColor: note.bg_color ? note.bg_color : '#17153B'}}>
                 <input type="text" className="notes-input" placeholder="Title" name="title" value={note.title} onChange={handleNoteChange} />
                 <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} />
+                {note.reminder_date &&
+                    <div className="notes-label" style={{alignSelf: "flex-start", marginLeft: '15px'}}>
+                        <span>{formatDate}</span>
+                        <MdCancel className="notes-label-icon" onClick={() => setNote({
+                            ...note,
+                            reminder_date: null
+                        })} />
+                    </div>
+                }
                 <div className="notes-labels-container">
                     {note.labels.map((label, index) => (
                         <div key={index} className="notes-label">
@@ -346,6 +377,16 @@ const SearchPage = ({search}) => {
                             <IoColorPalette className="edit-note-option-icon" />
                         </button>
                     </div> */}
+                    <div className="notes-option-con">
+                        <button className="notes-option-btn" title="Background Colors" onMouseOver={() => setShowReminder(true)}  onMouseOut={() => setShowReminder(false)}>
+                            <BiBellPlus className="notes-option-icon" />
+                        </button>
+                        {showReminder &&
+                            <div className="notes-colors" onMouseOver={() => setShowReminder(true)}  onMouseOut={() => setShowReminder(false)}>
+                                <input type="datetime-local" min={minDateTime} className="reminder-datetime" name='reminder_date' value={note.reminder_date} onChange={handleNoteChange} />
+                            </div>
+                        }
+                    </div>
                     <div className="notes-option-con">
                         <button className="notes-option-btn" title="Add Labels" onMouseOver={() => setShowLabels(true)}  onMouseOut={() => setShowLabels(false)}>
                             <MdLabelOutline className="notes-option-icon" />
