@@ -7,7 +7,11 @@ const createNote = async (note) => {
     try {
         validateNote(note);
         note.id = uuidv4();
-        note.labels = note.labels ? note.labels.join(',') : '';
+        console.log("NOTEEEEE",note);
+        if(note.labels.length > 0){
+            console.log("LABELS",note.labels);
+        }
+        note.labels = note.labels.length > 0 ? note.labels.join(',') : null;
         await Note.create(note);
         return {success: "Note created successfully"}
     } catch (error) {
@@ -34,7 +38,7 @@ const searchNotes = async (userId, query) => {
             order: [['created_at', 'DESC']]
         });
         notes.forEach(note => {
-            note.labels = note.labels.split(',').map(label => label.trim());
+            note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         });
         return notes;
     } catch (error) {
@@ -54,7 +58,7 @@ const getNotes = async (userId) => {
             order: [['created_at', 'DESC']]
         });
         notes.forEach(note => {
-            note.labels = note.labels.split(',').map(label => label.trim());
+            note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         });
         return notes;
     } catch (error) {
@@ -74,7 +78,7 @@ const getArchivedNotes = async (userId) => {
             order: [['created_at', 'DESC']]
         });
         notes.forEach(note => {
-            note.labels = note.labels.split(',').map(label => label.trim());
+            note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         });
         return notes;
     } catch (error) {
@@ -99,7 +103,7 @@ const getTrashedNotes = async (userId) => {
             order: [['created_at', 'DESC']]
         });
         notes.forEach(note => {
-            note.labels = note.labels.split(',').map(label => label.trim());
+            note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         });
         return notes;
     } catch (error) {
@@ -123,7 +127,7 @@ const getReminderNotes = async (userId) => {
             order: [['reminder_date', 'ASC']]
         });
         notes.forEach(note => {
-            note.labels = note.labels.split(',').map(label => label.trim());
+            note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         });
         return notes;
     } catch (error) {
@@ -144,7 +148,7 @@ const getNote = async (noteId) => {
             error.statusCode = 404;
             throw error;
         }
-        note.labels = note.labels.split(',').map(label => label.trim());
+        note.labels = note.labels ? note.labels.split(',').map(label => label.trim()) : [];
         return note;
     } catch (error) {
         console.error('Error getting note:', error);
@@ -156,7 +160,7 @@ const updateNote = async (noteId, note) => {
     try {
         validateNote(note);
         await getNote(noteId);
-        note.labels = note.labels ? note.labels.join(',') : '';
+        note.labels = note.labels.length > 0 ? note.labels.join(',') : null;
         result = await Note.update(note, {
             where: {
                 id: noteId

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
 import Loader from "../Loader";
 import NoNotes from "../NoNotes";
 import Failure from "../Failure";
@@ -31,12 +30,11 @@ const ReminderPage = () => {
     const [labelsList, setLabelsList] = useState([]);
     const [showEditNotePopup, setShowEditNotePopup] = useState(false);
     const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-    const {label} = useParams();
 
     const [note, setNote] = useState({
         title: '',
         content: '',
-        labels: [label],
+        labels: [],
         bg_color: '',
         archive: false,
         reminder_date: setNextHourReminder()
@@ -98,11 +96,12 @@ const ReminderPage = () => {
         setNote({
             title: '',
             content: '',
-            labels: [label],
+            labels: [],
             bg_color: '',
+            archive: false,
             reminder_date: setNextHourReminder()
         });
-    }, [label]);
+    }, [notesList.length]);
 
     const fetchNotes = async () => {
         const url = process.env.REACT_APP_BACKEND_URL + `/api/notes/reminder`;

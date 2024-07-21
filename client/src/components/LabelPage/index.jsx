@@ -94,7 +94,7 @@ const LabelPage = () => {
             bg_color: '',
             reminder_date: null
         });
-    }, [label]);
+    }, [label, notesList.length]);
 
     const fetchNotes = async () => {
         const url = process.env.REACT_APP_BACKEND_URL + `/api/labels/${label}/notes`;
