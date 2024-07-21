@@ -4,9 +4,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import {MdOutlineUnarchive, MdCancel} from "react-icons/md";
 import { GoClock } from "react-icons/go";
 import { format } from 'date-fns';
+import { trashNote, unarchiveNote } from '../APIs';
 
 
-function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleColorUpdate}) {
+function ArchiveItem({note, fetchNotes, openEditNotePopup, handleColorUpdate}) {
 
   const [showActions, setShowActions] = useState(false);
   const [showBgColors, setShowBgColors] = useState(false);
@@ -59,10 +60,10 @@ function ArchiveItem({note, trashNote, unarchiveNote, openEditNotePopup, handleC
                     </div>
                 }
             </div>
-            <button className="note-action-btn" onClick={() => unarchiveNote(note.id)} title='Unarchive'>
+            <button className="note-action-btn" onClick={() => unarchiveNote(note.id, fetchNotes)} title='Unarchive'>
                 <MdOutlineUnarchive className='note-action-icon' />
             </button>
-            <button className="note-action-btn" onClick={() => trashNote(note.id)} title='Delete'>
+            <button className="note-action-btn" onClick={() => trashNote(note.id, fetchNotes)} title='Delete'>
                 <RiDeleteBin6Line className='note-action-icon' />
             </button>
         </div>
