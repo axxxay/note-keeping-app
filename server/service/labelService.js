@@ -52,7 +52,6 @@ const createLabel = async (label) => {
             error.statusCode = 400;
             throw error;
         }
-        console.log('Triggered');
         label.id = uuidv4();
         await Label.create(label);
         return {success: "Label created successfully"}
@@ -90,7 +89,6 @@ const updateNoteLabels = async (oldLabel, label, userId) => {
 
 const updateLabel = async (labelId, label, userId) => {
     let transaction;
-    console.log(label);
     try {
         validateLabel(label);
         const oldLabel = await getLabel(labelId, userId);

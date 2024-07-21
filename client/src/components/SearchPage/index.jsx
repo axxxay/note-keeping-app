@@ -95,7 +95,6 @@ const SearchPage = ({search}) => {
                 setNotesList(data);
                 setApiStatus(apiStatusConstants.success);
             } else {
-                console.log(data.error);
                 toast.error(data.error);
                 setApiStatus(apiStatusConstants.failure);
             }
@@ -131,7 +130,6 @@ const SearchPage = ({search}) => {
 
 
     const handleColorUpdate = async (note, color) => {
-        console.log(note, color);
         note.bg_color = color;
         await editNote(note, setNote, fetchNotes, setShowEditNotePopup);
     }

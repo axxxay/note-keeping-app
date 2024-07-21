@@ -17,5 +17,5 @@ app.use('/api/labels', authenticateToken, labelRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log('\x1b[34m%s\x1b[0m', `Server is running on http://localhost:${PORT}`);
 });

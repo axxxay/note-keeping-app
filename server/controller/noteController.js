@@ -4,7 +4,6 @@ const createNote = async (req, res) => {
     try {
         const note = req.body;
         note.user_id = req.user.id;
-        console.log(req.body)
         const result = await noteService.createNote(note);
         res.status(201).json(result);
     } catch (error) {

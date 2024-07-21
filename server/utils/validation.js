@@ -19,7 +19,6 @@ const validateUser = (user) => {
 }
 
 const validateNote = (note) => {
-    console.log("note", note);
     if (!note.title || note.title.length < 2) {
         const error = new Error('Note title must be at least 2 characters long');
         error.statusCode = 400;

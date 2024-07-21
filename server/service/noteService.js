@@ -7,10 +7,6 @@ const createNote = async (note) => {
     try {
         validateNote(note);
         note.id = uuidv4();
-        console.log("NOTEEEEE",note);
-        if(note.labels.length > 0){
-            console.log("LABELS",note.labels);
-        }
         note.labels = note.labels.length > 0 ? note.labels.join(',') : null;
         await Note.create(note);
         return {success: "Note created successfully"}

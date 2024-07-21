@@ -40,7 +40,6 @@ const TrashPage = () => {
                 setNotesList(data);
                 setApiStatus(apiStatusConstants.success);
             } else {
-                console.log(data.error);
                 toast.error(data.error);
                 setApiStatus(apiStatusConstants.failure);
             }
@@ -67,7 +66,6 @@ const TrashPage = () => {
                 fetchTrashNotes();
                 toast.success('Note Restored');
             } else {
-                console.log(data.error);
                 toast.error(data.error);
             }
         } catch (error) {
@@ -92,7 +90,6 @@ const TrashPage = () => {
                 fetchTrashNotes();
                 toast.success('Note Deleted');
             } else {
-                console.log(data.error);
                 toast.error(data.error);
             }
         } catch (error) {

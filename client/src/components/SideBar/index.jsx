@@ -79,7 +79,6 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
                 toast.success('Label added');
                 setLabel('');
             } else {
-                console.log(data.error);
                 toast.error(data.error);
             }
         } catch (error) {
@@ -97,7 +96,6 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
         if(l1.name === label.name) {
             return;
         }
-        console.log('label', label);
         const url = process.env.REACT_APP_BACKEND_URL + `/api/labels/${label.id}`;
         const options = {
             method: 'PUT',
@@ -113,11 +111,9 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
             const data = await response.json();
             console.log(data);
             if (response.ok) {
-                console.log(data);
                 fetchLabels();
                 toast.success('Label updated, refresh the page to see changes');
             } else {
-                console.log(data.error);
                 toast.error(data.error);
             }
         } catch (error) {
@@ -140,11 +136,9 @@ const SideBar = ({setSearchQuery, showSideBar, setShowSideBar}) => {
             const data = await response.json();
             console.log(data);
             if (response.ok) {
-                console.log(data);
                 fetchLabels();
                 toast.success('Label deleted, refresh the page to see changes');
             } else {
-                console.log(data.error);
                 toast.error(data.error);
             }
         } catch (error) {
