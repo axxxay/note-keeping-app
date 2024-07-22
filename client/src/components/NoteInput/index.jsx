@@ -6,6 +6,7 @@ import { IoColorPalette, IoSend } from "react-icons/io5"
 import { MdCancel, MdLabelOutline } from "react-icons/md"
 import CreatableSelect from 'react-select/creatable';
 import { saveNote } from "../APIs";
+import TextEditorComponent from "../TextEditorComponent";
 
 const customStyles = {
     control: (provided, state) => ({
@@ -46,7 +47,7 @@ const customStyles = {
 };
 
 
-const NoteInput = ({ note, setNote, handleNoteChange, fetchNotes, labelsList, handleLabelChange, handleBgColorChange }) => {
+const NoteInput = ({ note, setNote, handleNoteChange, handleContentChange, fetchNotes, labelsList, handleLabelChange, handleBgColorChange }) => {
     
     const [showTextArea, setShowTextArea] = useState(false);
     const [showBgColors, setShowBgColors] = useState(false);
@@ -75,7 +76,8 @@ const NoteInput = ({ note, setNote, handleNoteChange, fetchNotes, labelsList, ha
             <input type="text" className="notes-input" placeholder={`${showTextArea ? "Title" : "Take a note..."}`} name="title" value={note.title} onChange={handleNoteChange} />
             {showTextArea &&
                 <>
-                <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} />
+                {/* <textarea className="notes-textarea" placeholder="Take a note..." name="content" value={note.content} onChange={handleNoteChange} /> */}
+                <TextEditorComponent content={note.content} handleContentChange={handleContentChange} />
                 {note.reminder_date &&
                     <div className="notes-label" style={{alignSelf: "flex-start", marginLeft: '15px'}}>
                         <GoClock className="notes-label-icon" style={{marginRight: '3px'}} />

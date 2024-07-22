@@ -24,7 +24,7 @@ function NoteItem({note, fetchNotes, openEditNotePopup, handleColorUpdate}) {
     <div className="note-item" style={{backgroundColor: note.bg_color ? note.bg_color : "#2E236C"}} onMouseOver={() => setShowActions(true)} onMouseOut={() => setShowActions(false)}>
         <div onClick={() => openEditNotePopup(note)}>
             <h3 className="note-title">{note.title}</h3>
-            <p className="note-content">{note.content}</p>
+            <p className="note-content" dangerouslySetInnerHTML={{__html: note.content}}></p>
             {note.reminder_date && 
                 <div className="notes-label" style={{marginTop: "5px", width: "fit-content"}}>
                     <GoClock className="notes-label-icon" style={{marginRight: '3px'}} />

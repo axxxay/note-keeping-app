@@ -39,6 +39,13 @@ const NotesPage = () => {
         });
     }
 
+    const handleContentChange = (content) => {
+        setNote({
+            ...note,
+            content: content
+        });
+    }
+
     const handleBgColorChange = (color) => {
         setNote({
             ...note,
@@ -154,6 +161,7 @@ const NotesPage = () => {
             labelsList={labelsList}
             fetchNotes={fetchNotes}
             setShowEditNotePopup={setShowEditNotePopup}
+            handleContentChange={handleContentChange}
         />
     )
 
@@ -191,6 +199,7 @@ const NotesPage = () => {
                 labelsList={labelsList}
                 handleLabelChange={handleLabelChange}
                 handleBgColorChange={handleBgColorChange}
+                handleContentChange={handleContentChange}
             />
             {renderSwitch()}
             {showEditNotePopup && renderEditNotePopup(note)}

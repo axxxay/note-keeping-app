@@ -1,0 +1,30 @@
+.quill {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.ql-snow {
+    border: none!important;
+    color: #ffffff!important;
+    font-size: 16px!important;
+    stroke: #C8ACD6!important;
+    padding: 5px!important;
+}
+
+.ql-picker {
+    color: #C8ACD6!important;
+}
+
+.ql-fill {
+    fill: #C8ACD6!important;
+}
+
+.ql-stroke {
+    stroke: #C8ACD6!important;
+}
+
+.ql-editor.ql-blank::before {
+    color: gray!important;
+    font-size: 16px!important;
+    font-style: normal!important;
+}

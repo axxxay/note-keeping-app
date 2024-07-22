@@ -41,6 +41,13 @@ const SearchPage = ({search}) => {
         setShowEditNotePopup(true);
     }
 
+    const handleContentChange = (content) => {
+        setNote({
+            ...note,
+            content: content
+        });
+    }
+
     const closeEditNotePopup = () => {
         setNote({
             title: '',
@@ -145,6 +152,7 @@ const SearchPage = ({search}) => {
             labelsList={labelsList}
             fetchNotes={fetchNotes}
             setShowEditNotePopup={setShowEditNotePopup}
+            handleContentChange={handleContentChange}
         />
     )
 

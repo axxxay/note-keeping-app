@@ -136,6 +136,12 @@ const ArchivePage = () => {
         await editNote(note, setNote, fetchArchiveNotes, setShowEditNotePopup);
     }
 
+    const handleContentChange = (content) => {
+        setNote({
+            ...note,
+            content: content
+        });
+    }
 
     const renderEditNotePopup = (note) => (
         <EditNotePopup 
@@ -147,6 +153,7 @@ const ArchivePage = () => {
             labelsList={labelsList}
             fetchNotes={fetchArchiveNotes}
             setShowEditNotePopup={setShowEditNotePopup}
+            handleContentChange={handleContentChange}
         />
     )
 

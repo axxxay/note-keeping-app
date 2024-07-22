@@ -47,6 +47,13 @@ const ReminderPage = () => {
         });
     }
 
+    const handleContentChange = (content) => {
+        setNote({
+            ...note,
+            content: content
+        });
+    }
+
     const handleBgColorChange = (color) => {
         setNote({
             ...note,
@@ -170,6 +177,7 @@ const ReminderPage = () => {
             labelsList={labelsList}
             fetchNotes={fetchNotes}
             setShowEditNotePopup={setShowEditNotePopup}
+            handleContentChange={handleContentChange}
         />
     )
 
@@ -208,6 +216,7 @@ const ReminderPage = () => {
                 labelsList={labelsList}
                 handleLabelChange={handleLabelChange}
                 handleBgColorChange={handleBgColorChange}
+                handleContentChange={handleContentChange}
             />
             {renderSwitch()}
             {showEditNotePopup && renderEditNotePopup(note)}
